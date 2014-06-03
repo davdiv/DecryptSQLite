@@ -21,7 +21,8 @@ namespace DecryptSQLite
 		{
 			String sourceFile = null;
 			String destinationFile = null;
-			String password = "password";
+			String sourcePassword = "password";
+			String destinationPassword = "";
 
 			const string FILTER = "Base de données (*.db3)|*.db3|Tous les fichiers (*.*)|*.*";
 			FileDialog sourceFileSelection = new OpenFileDialog ();
@@ -42,26 +43,24 @@ namespace DecryptSQLite
 			}
 			destinationFile = destinationFileSelection.FileName;
 
-			password = Interaction.InputBox ("Mot de passe pour\n" + sourceFile, "Mot de passe", password);
-			if (password.Length == 0) {
-				return;
-			}
+			sourcePassword = Interaction.InputBox ("Mot de passe pour\n" + sourceFile, "Ancien mot de passe", sourcePassword);
+			destinationPassword = Interaction.InputBox ("Mot de passe pour\n" + destinationFile, "Nouveau mot de passe", destinationPassword);
 
 			const string CONNECTION_STRING = "URI=file:{0};Version=3;Password={1};";
 			if (!sourceFile.Equals (destinationFile)) {
 				File.Copy (sourceFile, destinationFile);
 			}
-			String connectionString = String.Format (CONNECTION_STRING, destinationFile, password);
+			String connectionString = String.Format (CONNECTION_STRING, destinationFile, sourcePassword);
 
 			try {
 				SQLiteConnection connection = new SQLiteConnection (connectionString);
 				connection.Open ();
 				try {
-					connection.ChangePassword ("");
+					connection.ChangePassword (destinationPassword);
 					connection.Close ();
-					MessageBox.Show ("Mot de passe supprimé avec succès!", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show ("Mot de passe changé avec succès!", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				} catch (Exception e) {
-					MessageBox.Show ("Erreur lors de la suppression du mot de passe:\n" + e, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show ("Erreur lors du changement de mot de passe:\n" + e, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			} catch (Exception e) {
 				MessageBox.Show ("Erreur lors de l'ouverture de la base de données:\n" + e, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);

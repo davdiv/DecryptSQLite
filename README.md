@@ -1,10 +1,10 @@
 # DecryptSQLite
 
-This repository contains a simple utility, written in C#, which allows to remove the password from
+This repository contains a simple utility, written in C#, which allows to change the password of
 an encrypted SQLite database (created with [System.Data.SQLite](https://system.data.sqlite.org)).
 
-Note that you have to know the password in order to remove it (the goal of this utility is not to
-help recovering a lost password).
+Note that you have to know the old password in order to change it (the goal of this utility is
+not to help recovering a lost password).
 
 ## How to build
 
@@ -25,14 +25,19 @@ It might not be compatible with other versions.
 
 * Execute `DecryptSQLite.exe` (e.g. by double-clicking on it).
 
-* A dialog box to select the database file is displayed. Please select the SQLite encrypted
-database file (.db3) and click on Open.
+* A dialog box to select the database file is displayed. Please select the source SQLite database
+file (.db3) and click on Open.
 
-* Another dialog box then asks where to save the unencrypted database. You can change the default path
+* Another dialog box then asks where to save the changed database. You can change the default path
 (if needed) and validate by clicking on Save.
 
-* Another dialog box then asks for the password to decrypt the encrypted database. Type the password
-and click OK.
+* Another dialog box then asks for the password of the source database to decrypt it. Type
+the password and click on OK. If the source database is not encrypted, you can either click on Cancel
+or empty the field and click on OK.
+
+* Another dialog box then asks for the new password to encrypt the database. Type the new password
+and click on OK. If you don't want to encrypt the changed database, you can either click on Cancel,
+or make sure the field is empty and click on OK.
 
 * When the password removal operation completes successfully, a success message is displayed.
 Otherwise, an error message can be displayed.
