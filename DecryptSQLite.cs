@@ -47,10 +47,11 @@ namespace DecryptSQLite
 			destinationPassword = Interaction.InputBox ("Mot de passe pour\n" + destinationFile, "Nouveau mot de passe", destinationPassword);
 
 			const string CONNECTION_STRING = "URI=file:{0};Version=3;Password={1};";
+			const string CONNECTION_STRING_NO_PASSWORD = "URI=file:{0};Version=3;";
 			if (!sourceFile.Equals (destinationFile)) {
 				File.Copy (sourceFile, destinationFile);
 			}
-			String connectionString = String.Format (CONNECTION_STRING, destinationFile, sourcePassword);
+			String connectionString = sourcePassword.Length > 0 ? String.Format (CONNECTION_STRING, destinationFile, sourcePassword) : CONNECTION_STRING_NO_PASSWORD;
 
 			try {
 				SQLiteConnection connection = new SQLiteConnection (connectionString);
