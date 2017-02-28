@@ -51,7 +51,9 @@ namespace DecryptSQLite
 			if (!sourceFile.Equals (destinationFile)) {
 				File.Copy (sourceFile, destinationFile);
 			}
-			String connectionString = sourcePassword.Length > 0 ? String.Format (CONNECTION_STRING, destinationFile, sourcePassword) : CONNECTION_STRING_NO_PASSWORD;
+			String connectionString = sourcePassword.Length > 0 ?
+			                                        String.Format (CONNECTION_STRING, destinationFile, sourcePassword) :
+			                                        String.Format (CONNECTION_STRING_NO_PASSWORD, destinationFile);
 
 			try {
 				SQLiteConnection connection = new SQLiteConnection (connectionString);
